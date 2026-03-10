@@ -3,9 +3,11 @@ name: db_assignment4
 services:
   postgres:
     image: postgres:18-alpine
+    env_file:
+      - .env
     restart: always
     ports:
-      - 5431:5432
+      - $POSTGRES_PORT:5432
     environment:
       POSTGRES_USER: $POSTGRES_USER
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
