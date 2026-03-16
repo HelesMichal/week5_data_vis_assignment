@@ -19,11 +19,6 @@ class BirdRepository:
                 status_code=404,
                 detail=f"Species with id {payload.species_id} does not exist"
             )
-        if payload is None:
-            raise HTTPException(
-                status_code=404,
-                detail=f"Bird with id {payload.species_id} does not exist"
-            )
         item = Bird.model_validate(payload)
         self.session.add(item)
         self.session.commit()
