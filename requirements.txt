@@ -1,0 +1,4 @@
+sqlmodel
+psycopg[binary]
+fastapi
+python-dotenv

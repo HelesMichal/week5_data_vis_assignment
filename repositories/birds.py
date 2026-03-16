@@ -13,14 +13,17 @@ class BirdRepository:
         return items
 
     def insert(self, payload: BirdCreate):
-        # Check if species exists
-        species = self.session.get(Species, payload.species_id)
-        if not species:
+        # Check if bird exists
+        if payload.species_id not in [species.id for species in self.session.exec(select(Species)).all()]:
             raise HTTPException(
                 status_code=404,
                 detail=f"Species with id {payload.species_id} does not exist"
             )
-        
+        if payload is None:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Bird with id {payload.species_id} does not exist"
+            )
         item = Bird.model_validate(payload)
         self.session.add(item)
         self.session.commit()
